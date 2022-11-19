@@ -1,0 +1,26 @@
+{
+  "name": "orokaii",
+  "version": "1.0.0",
+  "description": "DrinkWithOrakaii is a simple client side water tracker and drink reminder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datwalkerv/Orokaii.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/datwalkerv/Orokaii/issues"
+  },
+  "homepage": "https://github.com/datwalkerv/Orokaii#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  },
+  "dependencies": {
+    "minify": "^9.1.0"
+  }
+}
