@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="../dist/css/output.css">
+    <link rel="icon" type="image/webp" href="./images/favicon.webp">
+    <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>[x-cloak] { display: none !important; }</style>
     <title>Orokaii</title>
 </head>
 <body class="w-full h-screen bg-gr">
@@ -17,20 +21,28 @@
             <a href="https://github.com/datwalkerv/Orokaii"><ion-icon name="logo-github" class="text-4xl text-slate-200 hover:text-slate-400"></ion-icon></a>
         </div>
     </div>
-    <div class="w-full h-screen flex items-center justify-center">
-        <div class="w-5/6 h-screen flex items-center justify-center flex-col">
-            <div class="w-5/6 h-6 border-lgr border-2 rounded-lg mb-5 relative">
-                <div class="absolute top-0 left-0 w-6/12 h-full rounded-lg bg-wg"></div>
+    <div class="w-full h-screen flex items-center justify-center" x-data="{hasGoal: (localStorage.getItem('daily-goal'))>0 ? true : false, goal: Number(localStorage.getItem('daily-goal')) || 0, setDaily: 200, daily: Number(localStorage.getItem(`${new Date().getUTCFullYear()}${new Date().getUTCMonth()}${new Date().getUTCDate()}`)) || 0, calcBar(e,t){e>t&&(e=t);let r=document.querySelector(`#bar`),s=document.querySelector(`#avatar`),a=Math.floor(100*e/t),i=document.querySelector(`#message`);r.style.width=a+`%`,a<=25?(s.src=`./images/1.webp`,i.innerText=`I'm thirsty! Please make me wet!`):a>25&&a<=50?(s.src=`./images/2.webp`,i.innerText=`It's getting better! Cmmon!`):a>50&&a<=75?(s.src=`./images/3.webp`,i.innerText=`GIVE ME WATER!`):a>75&&a<=100&&(s.src=`./images/4.webp`,i.innerText=`Oh, i'm wet!`)} }">
+        <div class="w-5/6 h-screen flex items-center justify-center flex-col" x-show="hasGoal" x-cloak x-init="calcBar(daily, goal)">
+            <div class="text-slate-300 font-space"><span x-text="daily"></span>/<span x-text="goal"></span></div>
+            <div class="w-5/6 sm:w-1/4 h-6 border-lgr border-2 rounded-lg mb-5 relative">
+                <div class="absolute top-0 left-0 w-0 h-full rounded-lg bg-wg" id="bar"></div>
             </div>
-            <img src="./images/1.webp" alt="thursty" class="rounded-full h-60 w-auto" draggable="false">
-            <div class="font-space text-slate-300 text-center mt-5">I'm thirsty! Please make me wet!</div>
-            <div class="flex justify-center items-center mt-5">
-                <input type="text" placeholder="200ml" value="200ml" class="outline-none border-none bg-transparent border-lgr border-b-2 text-slate-300 w-16">
-                <input type="submit" value="Drink" class="p-2 ml-2 bg-wg rounded-lg text-slate-200 font-space">
+            <img src="./images/1.webp" alt="thursty" class="rounded-full h-60 w-auto" draggable="false" id="avatar">
+            <div class="font-space text-slate-300 text-center mt-5" id="message">I'm thirsty! Please make me wet!</div>
+            <div class="flex justify-center items-center mt-5 text-slate-300 font-space">
+                <input type="text" placeholder="200" value="200" class="outline-none border-none bg-transparent border-lgr border-b-2 text-slate-300 w-8" x-mask="9999" x-model="setDaily">ml
+                <input type="submit" value="Drink" class="p-2 ml-2 bg-wg rounded-lg text-slate-200 font-space cursor-pointer" x-on:click="localStorage.setItem(`${new Date().getUTCFullYear()}${new Date().getUTCMonth()}${new Date().getUTCDate()}`, Number(daily)+Number(setDaily)); daily+=Number(setDaily); calcBar(daily, goal)">
+            </div>
+        </div>
+        <div class="w-5/6 h-screen flex items-center justify-center flex-col font-space" x-show="!hasGoal" x-cloak>
+            <div class="font-space text-slate-300 text-center mb-5">Please set your daily goal</div>
+            <div class="text-slate-300">
+            <input type="text" placeholder="2600" value="2600" class="outline-none border-none bg-transparent border-lgr border-b-2 text-slate-300 w-12" x-mask="9999" x-model="goal">ml
+            <input type="submit" value="Save" class="p-2 ml-2 bg-wg rounded-lg text-slate-200 font-space cursor-pointer" x-on:click="localStorage.setItem('daily-goal', goal); hasGoal = !hasGoal">
             </div>
         </div>
     </div>
-    <div class="absolute bottom-3 mx-auto text-center left-0 right-0 text-slate-400">made with <ion-icon name="heart" class="text-red-600"></ion-icon> by <a href="https://github.com/datwalkerv" class="text-slate-300">@datwalkerv</a></div>
+    <div class="absolute bottom-3 mx-auto text-center left-0 right-0 text-slate-400 font-space">made with <ion-icon name="heart" class="text-red-600"></ion-icon> by <a href="https://github.com/datwalkerv" class="text-slate-300 hover:text-slate-400">@datwalkerv</a></div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
